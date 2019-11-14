@@ -1,0 +1,97 @@
+{% extends "layout.html" %} {% block title %} Book Details {% endblock %} {% block main %}
+<div id="background">
+  <div class="container p-5">
+    <div class="row justify-content-center mb-2">
+      <h2>{{ row.title }}</h2>
+    </div>
+    <div class="row justify-content-center mb-2">
+      <h4>{{ row.author }}, {{ row.year }}</h4>
+    </div>
+    <div class="row justify-content-center mb-2">
+      <h5>ISBN: {{ row.isbn }}</h5>
+    </div>
+    <div class="row justify-content-center mb-3">
+      <img src="http://covers.openlibrary.org/b/isbn/{{ row.isbn }}-M.jpg" alt="" />
+    </div>
+    <div class="row justify-content-center mb-1">
+      <h5>Goodreads number of ratings: {{ good_count }}</h5>
+    </div>
+    <div class="row justify-content-center mb-4">
+      <h5>Gooderads average rating: {{ good_rating }} out of 5</h5>
+    </div>
+    {% if user_review %}
+    <div class="row justify-content-center mb-2">
+      <h5>You already subbmitted a review for this Book.</h5>
+    </div>
+    {% else %}
+    <div class="row justify-content-center mb-2">
+      <a href="#" class="btn btn-lg btn-outline-dark" data-toggle="modal" data-target="#addPostModal"
+        >Review this Book</a
+      >
+    </div>
+    {% endif %}
+    <div class="col-md-8 offset-md-2"></div>
+    <div class="row justify-content-center m-3">
+      <h4>Reviews on Bookster50:</h4>
+    </div>
+    {% if not reviews %}
+    <div class="row justify-content-center mb-2">
+      <h5>No reviews for this Book yet.</h5>
+    </div>
+    {% else %}
+    <div class="col-md-8 offset-md-2">
+      {% for review in reviews %}
+      <div class="card bg-light mb-3">
+        <div class="card-header">{{ review.username }} wrote on {{ review.date }}:</div>
+        <div class="card-body">
+          <h5 class="card-title">Rating: {{ review.rating }} out of 5!</h5>
+          <p class="card-text">{{ review.review }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- add review modal -->
+<div class="modal fade" id="addPostModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary text-white">
+        <h4 class="modal-title">Add Review</h4>
+        <button class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <form id="form" action="{{ url_for('book', book_id=row.id) }}" method="POST">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="rating">Rating</label>
+            <select name="rating" class="form-control">
+              <option value="1">Bad - 1</option>
+              <option value="2">Soso - 2</option>
+              <option value="3">Ok - 3</option>
+              <option value="4">Good - 4</option>
+              <option value="5">Awesome - 5</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="body">Review</label>
+            <textarea name="review" class="form-control" rows="5"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="form_submit()" data-dismiss="modal">Submit Review</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function form_submit() {
+    document.getElementById('form').submit();
+  }
+</script>
+{% endblock %}
