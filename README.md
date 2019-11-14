@@ -2,4 +2,7 @@
 
 Web Programming with Python and JavaScript
 
-https://cs50.stackexchange.com/questions/34405/api-goodreads-issue-with-the-book-page
+Using bootstrap to make the app responsive.
+Using 3 databases: users, books and reviews.
+Specs according to the project requirements.
+Additionally adding cover pics from openlibrary.org
