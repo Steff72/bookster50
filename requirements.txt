@@ -16,7 +16,7 @@ idna==2.8
 isort==4.3.21
 itsdangerous==1.1.0
 jellyfish==0.7.2
-Jinja2==2.10.3
+Jinja2==2.11.3
 lazy-object-proxy==1.4.1
 lib50==2.0.0
 MarkupSafe==1.1.1
